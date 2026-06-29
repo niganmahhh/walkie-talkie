@@ -204,6 +204,11 @@ String networkLocalIP()
     return WiFi.localIP().toString();
 }
 
+uint32_t networkLocalDeviceId()
+{
+    return localDeviceId;
+}
+
 bool networkSendAudio(const int16_t *samples, size_t sampleCount)
 {
     if (samples == nullptr || sampleCount == 0)
@@ -212,7 +217,7 @@ bool networkSendAudio(const int16_t *samples, size_t sampleCount)
     return sendPacket(samples, sampleCount);
 }
 
-int networkReceiveAudio(int16_t *samples, size_t maxSamples)
+int networkReceiveAudioFrom(int16_t *samples, size_t maxSamples, uint32_t *senderDeviceId)
 {
     if (!networkIsConnected() || samples == nullptr || maxSamples == 0)
         return 0;
@@ -253,5 +258,14 @@ int networkReceiveAudio(int16_t *samples, size_t maxSamples)
         copySamples = maxSamples;
 
     memcpy(samples, rxPacket + sizeof(AudioPacketHeader), copySamples * sizeof(int16_t));
+
+    if (senderDeviceId != nullptr)
+        *senderDeviceId = header.deviceId;
+
     return (int)copySamples;
+}
+
+int networkReceiveAudio(int16_t *samples, size_t maxSamples)
+{
+    return networkReceiveAudioFrom(samples, maxSamples, nullptr);
 }

@@ -46,6 +46,12 @@
 #define VOICE_SEND_THRESHOLD 650
 #define SPEAKER_VOLUME_PERCENT 20
 
+// Mailbox / button behavior
+#define MESSAGE_END_TIMEOUT_MS 450
+#define BUTTON_TAP_MAX_MS 300
+#define BUTTON_LONG_PRESS_MS 800
+#define INBOX_IDLE_TIMEOUT_MS 15000
+
 // INMP441: L/R tied to GND usually means left channel.
 // Change this to 1 only if the microphone becomes silent.
 #define MIC_USE_RIGHT_CHANNEL 0

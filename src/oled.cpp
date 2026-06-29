@@ -84,10 +84,10 @@ void OLED::showReady()
     display.println(networkIp);
 
     display.setCursor(0, 44);
-    display.println("Status:");
+    display.println("Status: READY");
 
     display.setCursor(0, 54);
-    display.println("Waiting...");
+    display.println("Tap:Inbox Hold:PTT");
 
     display.display();
 }
@@ -124,8 +124,87 @@ void OLED::showPlaying()
     display.println("ESP TALK");
 
     display.setTextSize(2);
-    display.setCursor(4, 36);
-    display.println("Receiving...");
+    display.setCursor(14, 36);
+    display.println("PLAYING");
+
+    display.display();
+}
+
+void OLED::showNewMessage(const String &senderId)
+{
+    display.clearDisplay();
+    display.setTextColor(SSD1306_WHITE);
+    display.setTextSize(1);
+
+    display.setCursor(0, 0);
+    display.println("==================");
+
+    display.setTextSize(2);
+    display.setCursor(0, 14);
+    display.println("NEW");
+    display.setCursor(0, 34);
+    display.println("MESSAGE");
+
+    display.setTextSize(1);
+    display.setCursor(70, 16);
+    display.print("From:");
+    display.setCursor(70, 26);
+    display.println(senderId);
+
+    display.setCursor(0, 56);
+    display.println("Tap:Play Hold:Save");
+
+    display.display();
+}
+
+void OLED::showInbox(size_t index,
+                     size_t total,
+                     const String &messageId,
+                     const String &direction,
+                     bool read)
+{
+    display.clearDisplay();
+    display.setTextColor(SSD1306_WHITE);
+    display.setTextSize(1);
+
+    display.setCursor(0, 0);
+    display.println("INBOX");
+
+    display.setCursor(78, 0);
+    display.print(index + 1);
+    display.print("/");
+    display.println(total);
+
+    display.setCursor(0, 14);
+    display.print("ID  : ");
+    display.println(messageId);
+
+    display.setCursor(0, 26);
+    display.print("DIR : ");
+    display.println(direction);
+
+    display.setCursor(0, 38);
+    display.print("READ: ");
+    display.println(read ? "YES" : "NO");
+
+    display.setCursor(0, 56);
+    display.println("Tap:Next Hold:Play");
+
+    display.display();
+}
+
+void OLED::showSaved()
+{
+    display.clearDisplay();
+    display.setTextColor(SSD1306_WHITE);
+    display.setTextSize(1);
+
+    display.setCursor(0, 0);
+    display.println("==================");
+
+    display.setTextSize(2);
+    display.setCursor(24, 24);
+    display.println("SAVED");
 
     display.display();
 }
